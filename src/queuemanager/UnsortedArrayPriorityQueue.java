@@ -33,10 +33,14 @@ public UnsortedArrayPriorityQueue(int size) {
         if (isEmpty()) {
             throw new QueueUnderflowException();
         } else{
-           return ((PriorityItem<T>) storage[0]).getItem();
+            int i = 0;
+            for (i = 0; i < tailIndex; i++)
+                storage[i] = storage[i + 1];
+               return ((PriorityItem<T>) storage[i]).getItem();
+                }
+            
         }
-    }
-
+        
 
 
 
@@ -48,7 +52,7 @@ public UnsortedArrayPriorityQueue(int size) {
            tailIndex = tailIndex - 1;
            throw new QueueOverflowException();
        } else {            
-                int i = tailIndex;
+                int i = tailIndex;                             
                 storage[i] = new PriorityItem<>(item, priority);                  
     }
     }
@@ -56,7 +60,7 @@ public UnsortedArrayPriorityQueue(int size) {
 
     @Override
     public void remove() throws QueueUnderflowException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
