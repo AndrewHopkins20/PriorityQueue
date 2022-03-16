@@ -33,9 +33,12 @@ public UnsortedArrayPriorityQueue(int size) {
         if (isEmpty()) {
             throw new QueueUnderflowException();
         } else{
-            int i = 0;
+            int i, max = 0;
             for (i = 0; i < tailIndex; i++)
-                storage[i] = storage[i + 1];
+                if(max < i){
+                    max = i;
+                }
+                
                return ((PriorityItem<T>) storage[i]).getItem();
                 }
             
@@ -60,7 +63,17 @@ public UnsortedArrayPriorityQueue(int size) {
 
     @Override
     public void remove() throws QueueUnderflowException {
-        
+          if (isEmpty()) {
+            throw new QueueUnderflowException();
+        } else{
+            int i, max = 0;
+            for (i = 0; i < tailIndex; i++)
+                if(max < i){
+                    max = i;
+                     storage[i] = storage[i + 1];
+                }
+              tailIndex = tailIndex - 1;
+          }
     }
 
     @Override
