@@ -26,15 +26,33 @@ public UnsortedArrayPriorityQueue(int size) {
         tailIndex = -1;
 }
 
-    @Override
-    public void add(T item, int priority) throws QueueOverflowException {
-       
+
+  @Override
+    public T head() throws QueueUnderflowException {
+        
+        if (isEmpty()) {
+            throw new QueueUnderflowException();
+        } else{
+           return ((PriorityItem<T>) storage[0]).getItem();
+        }
     }
 
+
+
+
+
     @Override
-    public T head() throws QueueUnderflowException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void add(T item, int priority) throws QueueOverflowException {
+       tailIndex = tailIndex + 1;
+       if (tailIndex >= capacity) {
+           tailIndex = tailIndex - 1;
+           throw new QueueOverflowException();
+       } else {            
+                int i = tailIndex;
+                storage[i] = new PriorityItem<>(item, priority);                  
     }
+    }
+  
 
     @Override
     public void remove() throws QueueUnderflowException {
@@ -43,7 +61,18 @@ public UnsortedArrayPriorityQueue(int size) {
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return tailIndex < 0;
     }
-    
+     @Override
+    public String toString() {
+        String result = "[";
+        for (int i = 0; i <= tailIndex; i++) {
+            if (i > 0) {
+                result = result + ", ";
+            }
+            result = result + storage[i];
+        }
+        result = result + "]";
+        return result;
+    }
 }
