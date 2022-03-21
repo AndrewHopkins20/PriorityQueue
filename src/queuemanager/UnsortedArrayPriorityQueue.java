@@ -33,7 +33,8 @@ public UnsortedArrayPriorityQueue(int size) {
         if (isEmpty()) {
             throw new QueueUnderflowException();
         } else{
-            int i, max = 0;
+            
+             int i, max = 0;
             for (i = 0; i < tailIndex; i++)
                 if(max < i){
                     max = i;
@@ -43,6 +44,7 @@ public UnsortedArrayPriorityQueue(int size) {
                 }
             
         }
+           
         
 
 
