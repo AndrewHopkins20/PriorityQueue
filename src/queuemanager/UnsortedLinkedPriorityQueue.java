@@ -1,23 +1,26 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package queuemanager;
 
-
-public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
+/**
+ *
+ * @author Andrew Hopkins
+ */
+public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
-   private ListNode<T> head; 
-  
-   
-  
-
-    public SortedLinkedPriorityQueue() {
+      private ListNode<T> head; 
+    
+    public UnsortedLinkedPriorityQueue() {
         {
             head = null;
-           
             
             
         }
        
-}
+    }
     
   
     @Override
@@ -31,38 +34,12 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException {
-        if(isEmpty()){
+       
             head = new ListNode<>(item, priority, head);
-        } else if(!isEmpty()){
-            ListNode<T> start = head;
-            ListNode<T> last = start;
-            head = new ListNode<>(item, priority, head);
-            
-            if(priority > start.getPriority()){
-                head.next= start;
-            } else if(priority < start.getPriority()) {
-                while (start != null && priority < start.getPriority()){
-                    head.next= last;
-                    start = start.next;
-                    if(start == null){
-                        head.next = head;
-                      
-                    }else{
-                        head.next= start;
-                    }
-                    head = last;
-                }
-                
-            }                                                                         
-            }
         
         }
     
                     
-           
-        
-        
-    
 
     @Override
     public void remove() throws QueueUnderflowException {
@@ -114,4 +91,4 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
 }
         
-    
+
