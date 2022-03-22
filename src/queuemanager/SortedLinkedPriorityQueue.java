@@ -4,12 +4,20 @@ package queuemanager;
 
 public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
-   private ListNode<T> queue; 
+   private ListNode<T> head; 
+   private ListNode<T> temp; 
    
+   private int tailIndex;
+   
+   private int capacity;
 
     public SortedLinkedPriorityQueue() {
         {
-            queue = null;
+            head = null;
+            tailIndex = -1;
+            capacity = size();
+            
+            
         }
        
 }
@@ -20,28 +28,56 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
        if(isEmpty()){
            throw new QueueUnderflowException();
        }
-       return queue.getItem();
+       return head.getItem();
     }
 
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException {
+        if(isEmpty()){
+            head = new ListNode<>(item, priority, head);
+        } else if(!isEmpty()){
+            ListNode<T> start = head;
+            ListNode<T> last = start;
+            head = new ListNode<>(item, priority, head);
+            
+            if(priority > start.getPriority()){
+                head.next= start;
+            } else if(priority < start.getPriority()) {
+                while (start != null && priority < start.getPriority()){
+                    head.next= last;
+                    start = start.next;
+                    if(start == null){
+                        head.next = head;
+                      
+                    }else{
+                        head.next= start;
+                    }
+                    head = last;
+                }
+                
+            }                                                                         
+            }
         
-        queue = new ListNode<>(item, priority, queue);
+        }
+    
+                    
+           
         
-    }
+        
+    
 
     @Override
     public void remove() throws QueueUnderflowException {
         if(isEmpty()){
             throw new QueueUnderflowException();
         }
-        queue = queue.getNext();
+        head = head.getNext();
     }
 
     @Override
     public boolean isEmpty() {
-          return queue == null;
+          return head == null;
     }
     
 
@@ -52,8 +88,8 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
         String result = " LinkedList: size " + size();
         result += "[";
-        for(ListNode<T> node = queue; node != null; node = node.getNext()){
-            if(node != queue){
+        for(ListNode<T> node = head; node != null; node = node.getNext()){
+            if(node != head){
                 result += ", ";
             }
             result +=  node.getItem();
@@ -67,7 +103,7 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     }
     
         private int size(){
-        ListNode<T> node = queue;
+        ListNode<T> node = head;
         int result = 0;
         while (node!=null){
             result = result + 1;

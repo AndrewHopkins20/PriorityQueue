@@ -13,7 +13,7 @@ public class ListNode<T> {
     
     private T item;
     private final int priority;
-    private ListNode<T> next;
+    public ListNode<T> next;
     
     public ListNode(T item, int priority, ListNode<T> next){
         
@@ -31,6 +31,9 @@ public class ListNode<T> {
         return priority;
     }
 
+   
+     
+    
     @Override
     public String toString() {
         return "(" + getItem() + ", " + getPriority() + ")";
