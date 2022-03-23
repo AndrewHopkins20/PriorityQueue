@@ -28,7 +28,16 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
        if(isEmpty()){
            throw new QueueUnderflowException();
        }
-       return head.getItem();
+       int maxPriority = 0;
+       ListNode<T> temp = head;
+       for(ListNode<T> max = head; max != null; max = max.getNext()){
+       
+       if(max.getPriority() > maxPriority){
+           maxPriority = max.getPriority();
+           temp = max;
+       }
+       }
+       return temp.getItem();
     }
 
     
@@ -45,8 +54,28 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     public void remove() throws QueueUnderflowException {
         if(isEmpty()){
             throw new QueueUnderflowException();
+        }        
+        ListNode<T> temp = head;
+        ListNode<T> current = null;
+        int i = 0;
+        int maxPriority = 0;
+        
+        for(ListNode<T> max = head; max != null; max = max.getNext()){
+            if(i >= 2){
+                temp = temp.next;
+            }
+            if(max.getPriority() > maxPriority){
+                maxPriority = max.getPriority();
+                if(i != 0){
+                    current = temp;
+                }
+                
+            }
+            i++;
         }
-        head = head.getNext();
+        if(current == null){
+            head = head.next;
+        }
     }
 
     @Override
