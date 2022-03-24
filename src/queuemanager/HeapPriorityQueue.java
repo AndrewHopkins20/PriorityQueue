@@ -36,17 +36,18 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
         Object[] temp = new Object[1]; 
         tailIndex = tailIndex + 1;
         int element = tailIndex;
-        int parent = (element -1)/2;
+        int parent = (element -1)/2;        
+        temp[0] = parent;
         if (tailIndex >= capacity) {           
             tailIndex = tailIndex - 1;
             throw new QueueOverflowException();
         } else if (((PriorityItem<T>) Heap[element]).getPriority() > ((PriorityItem<T>) Heap[parent]).getPriority()){
-            while(parent < 0 && ((PriorityItem<T>) Heap[element - 1]).getPriority() < priority){
+            while(Heap[parent] != null && ((PriorityItem<T>) Heap[element]).getPriority() > ((PriorityItem<T>) Heap[parent]).getPriority()){
                 temp[0] = Heap[parent];
                 Heap[parent] = Heap[element];
                 Heap[parent] = temp[0];       
-                
-                     }
+            }
+                    
            
             
     }
@@ -54,9 +55,12 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
     }
     @Override
     public T head() throws QueueUnderflowException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (isEmpty()) {
+            throw new QueueUnderflowException();
+        } else {
+            return ((PriorityItem<T>) Heap[0]).getItem();
     }
-
+    }
     @Override
     public void remove() throws QueueUnderflowException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
