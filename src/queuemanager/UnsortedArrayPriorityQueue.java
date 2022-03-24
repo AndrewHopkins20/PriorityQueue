@@ -74,15 +74,16 @@ public UnsortedArrayPriorityQueue(int size) {
             throw new QueueUnderflowException();
         } else{
              int i; 
+             int max = 0;
            int next = 0;
            int size = tailIndex +1;
             for (i = 0; i < size; i++)
                 if(((PriorityItem<T>) storage[i]).getPriority() > next){
                     next = ((PriorityItem<T>) storage[i]).getPriority();
-                    
-                     
+
+                     storage[i] = storage[i + 1];
                 }
-             tailIndex = tailIndex - 1;
+             tailIndex = tailIndex - 1;         
           }
     }
     @Override
