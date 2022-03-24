@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File Name: UnsortedLinkedPriorityQueue
+ * Last Edited: 24/03/22
+ * Note: My Attempt at Making a priority queue using a unsorted linked list
  */
 package queuemanager;
 
@@ -10,11 +10,12 @@ package queuemanager;
  * @author Andrew Hopkins
  */
 public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
-    
+      // creates the list and calls it head
       private ListNode<T> head; 
     
     public UnsortedLinkedPriorityQueue() {
         {
+            //sets head to be null
             head = null;
             
             
@@ -28,6 +29,8 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
        if(isEmpty()){
            throw new QueueUnderflowException();
        }
+       //scans through nodes saving as max and then if then checks next node. if the next node has higher priority it sets it as max
+       //when its checked all the nodes it sets the temp value to be the node at max which will be the highest priority and then displays it
        int maxPriority = 0;
        ListNode<T> temp = head;
        for(ListNode<T> max = head; max != null; max = max.getNext()){
@@ -43,7 +46,7 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException {
-       
+       //adds new item to list at the first position as it is unsorted
             head = new ListNode<>(item, priority, head);
         
         }
@@ -59,8 +62,9 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         ListNode<T> current = null;
         int i = 0;
         int maxPriority = 0;
-        
+        //scans each node for highest priority same as head
         for(ListNode<T> max = head; max != null; max = max.getNext()){
+            //keeps track of the node behind the one being removed as temp so when we remove it we can move the temp node up
             if(i >= 2){
                 temp = temp.next;
             }

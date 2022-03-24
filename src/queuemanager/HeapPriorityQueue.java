@@ -10,15 +10,15 @@ package queuemanager;
  * @author Andrew Hopkins
  */
 public class HeapPriorityQueue<T> implements PriorityQueue<T>{
-    
-    private Object[] Heap;
-    private int capacity;
+    private final Object[] Heap;
+    private final int capacity;
     private int tailIndex;
     
     
    
     
     public HeapPriorityQueue(int size){
+       //Heap stores the data, capacity is the size of the heap, and tail index is equal to the number of items minus 1, same as sorted array
        Heap = new Object[size];
        capacity = size;
        tailIndex = -1;
@@ -32,17 +32,19 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
   
 
     @Override
-    public void add(T item, int priority) throws QueueOverflowException {
+    public void add(T item, int priority) throws QueueOverflowException {       
         Object[] temp = new Object[1]; 
         tailIndex = tailIndex + 1;
         int element = tailIndex;
+        //calculates the position of the parent
         int parent = (element -1)/2;        
         temp[0] = parent;
         if (tailIndex >= capacity) {           
             tailIndex = tailIndex - 1;
             throw new QueueOverflowException();
         } else if (((PriorityItem<T>) Heap[element]).getPriority() > ((PriorityItem<T>) Heap[parent]).getPriority()){
-            while(Heap[parent] != null && ((PriorityItem<T>) Heap[element]).getPriority() > ((PriorityItem<T>) Heap[parent]).getPriority()){
+            //swaps the elements around with the parent based on priority
+            while(Heap[parent] != null && ((PriorityItem<T>) Heap[element]).getPriority() > ((PriorityItem<T>) Heap[parent]).getPriority()){              
                 temp[0] = Heap[parent];
                 Heap[parent] = Heap[element];
                 Heap[parent] = temp[0];       
@@ -58,17 +60,18 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
         if (isEmpty()) {
             throw new QueueUnderflowException();
         } else {
+            //gets the item at position 0 in the Heap, if the swapping works it should be the item with max 
             return ((PriorityItem<T>) Heap[0]).getItem();
     }
     }
     @Override
     public void remove() throws QueueUnderflowException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return tailIndex < 0;
     }
     
     
